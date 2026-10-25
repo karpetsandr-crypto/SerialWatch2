@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16131f">
+<script>try{var t=(JSON.parse(localStorage.getItem("serialwatch.cfg")||"{}")||{}).theme;if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Сериалы">
+<title>Наши сериалы</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div id="app">
+  <header class="top">
+    <div class="brand">
+      <h1>Наши сериалы</h1>
+      <p id="subtitle" class="subtitle"></p>
+    </div>
+    <button id="pair" class="pair" type="button" aria-label="Мы"></button>
+    <button id="btn-sync" class="sync" type="button" aria-label="Состояние синхронизации"><span class="dot" id="sync-dot"></span></button>
+    <button id="btn-settings" class="iconbtn" type="button" aria-label="Настройки">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <section id="rail-wrap" class="rail-wrap" hidden>
+      <h2 class="section-title">Продолжаем</h2>
+      <div id="rail" class="rail"></div>
+    </section>
+
+    <nav id="filters" class="chips" aria-label="Фильтр по статусу"></nav>
+
+    <section id="grid" class="grid" aria-live="polite"></section>
+    <section id="stats" class="stats" hidden></section>
+    <section id="codes" class="codes" hidden></section>
+  </main>
+
+  <nav id="tabs" class="tabs" aria-label="Разделы">
+    <button type="button" data-tab="together" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.3A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3z"/></svg><span>Вместе</span></button>
+    <button type="button" data-tab="mine" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c.8-3.6 3.8-5.4 7-5.4s6.2 1.8 7 5.4"/></svg><span>Моё</span></button>
+    <button type="button" data-tab="stats" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg><span>Итоги</span></button>
+    <button type="button" data-tab="codes" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="3.6"/><path d="M11.6 12H21M18 12v3M15 12v2"/></svg><span>Коды</span></button>
+  </nav>
+
+  <button id="fab" class="fab" type="button">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    Добавить
+  </button>
+</div>
+
+<!-- Поиск / добавление -->
+<div class="sheet" id="sheet-search" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-tall" role="dialog" aria-modal="true" aria-label="Добавить сериал или фильм">
+    <div class="grab"></div>
+    <form id="search-form" class="searchbar" autocomplete="off">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search-input" type="search" inputmode="search" enterkeyhint="search" placeholder="Название или ссылка" aria-label="Название или ссылка">
+    </form>
+    <div id="results" class="results"></div>
+  </div>
+</div>
+
+<!-- Карточка сериала -->
+<div class="sheet" id="sheet-detail" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-tall" role="dialog" aria-modal="true" aria-label="Сериал">
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<!-- Настройки -->
+<div class="sheet" id="sheet-settings" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Настройки">
+    <div class="grab"></div>
+    <h2 class="sheet-title">Настройки</h2>
+    <div class="field"><span>Кто вы друг другу</span><div class="seg kindseg"><button type="button" data-kind="pair">Пара</button><button type="button" data-kind="friends">Друзья</button><button type="button" data-kind="family">Семья</button></div></div>
+    <div class="field"><span>Язык</span><div class="seg langseg"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div></div>
+
+    <label class="field"><span>Ваше имя</span>
+      <input id="cfg-nick" type="text" placeholder="Например, Саша" autocomplete="off" maxlength="24">
+    </label>
+
+    <div class="field"><span>Оформление на этом телефоне</span><div id="theme-picker" class="themes"></div></div>
+    <div class="field"><span>Ваша картинка</span>
+      <div id="avatar-picker" class="avpick"></div>
+      <div class="inline" style="margin-top:10px">
+        <button type="button" class="btn small ghost" id="btn-photo">Выбрать картинку</button>
+        <button type="button" class="btn small ghost" id="btn-nophoto">Только буква</button>
+        <input id="cfg-photo" type="file" accept="image/*" hidden>
+      </div>
+    </div>
+    <div class="field"><span>Ваш цвет</span><div id="color-picker" class="swatches"></div></div>
+    <div class="field" id="members-field" hidden><span>Участники кабинета</span><div id="members" class="members"></div></div>
+
+    <label class="field"><span class="lbl-code">Код вашей пары</span>
+      <div class="inline">
+        <input id="cfg-code" type="text" placeholder="Один и тот же у всех" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button type="button" class="btn small" id="btn-gen-code">Придумать</button>
+      </div>
+    </label>
+    <p class="note">Код работает как пароль: кто его знает, видит ваш список. Лучше длинный и непохожий на слово.</p>
+    <button type="button" class="btn ghost wide" id="btn-share-code">Отправить код остальным</button>
+
+    <details class="adv">
+      <summary>Ключи и регион</summary>
+      <button type="button" class="btn wide" id="btn-copy-setup" style="margin-bottom:10px">Скопировать код настроек</button>
+      <label class="field"><span>Личный ключ («Моё» привязано к нему, не к коду пары)</span>
+        <input id="cfg-uid" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+      </label>
+      <label class="field"><span>Ключ TMDB</span>
+        <input id="cfg-tmdb" type="password" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="field"><span>Конфиг Firebase (JSON)</span>
+        <textarea id="cfg-fb" rows="6" spellcheck="false" placeholder='{ "apiKey": "…", "databaseURL": "…" }'></textarea>
+      </label>
+      <label class="field"><span>Страна для «Где смотреть» (две буквы)</span>
+        <input id="cfg-region" type="text" maxlength="2" autocomplete="off" autocapitalize="characters" placeholder="UA">
+      </label>
+    </details>
+
+    <button id="btn-save-cfg" type="button" class="btn primary wide">Сохранить</button>
+  </div>
+</div>
+
+<!-- Первый запуск -->
+<div class="sheet" id="sheet-intro" hidden>
+  <div class="scrim"></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Добро пожаловать">
+    <div class="grab"></div>
+    <div class="seg langseg" style="margin-bottom:10px"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div>
+    <h2 class="sheet-title serif-big">Добро пожаловать</h2>
+    <p class="note lead">Общий список сериалов и фильмов для двоих или для компании. Всё хранится в вашем облаке и одинаково видно на всех телефонах.</p>
+    <ol class="intro-steps">
+      <li><b>Установите как приложение.</b> iPhone: в Safari нажмите «Поделиться» → «На экран “Домой”». Android: меню ⋮ → «Установить приложение».</li>
+      <li class="intro-keys"><b>Подключите сервисы.</b> Нужен бесплатный ключ TMDB (поиск сериалов) и база Firebase (синхронизация). Если приложение уже настроено на другом вашем телефоне, откройте там Настройки → «Скопировать код настроек» и вставьте его ниже.</li>
+      <li><b>Введите имя и общий код.</b> На втором телефоне введите тот же код, и список станет общим.</li>
+    </ol>
+    <label class="field intro-keys"><span>Код настроек</span>
+      <textarea id="intro-code" rows="2" placeholder="sw1:…" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+    </label>
+    <button id="intro-apply" type="button" class="btn primary wide intro-keys">Применить код</button>
+    <button id="intro-manual" type="button" class="btn wide intro-keys">Ввести ключи вручную</button>
+    <button id="intro-skip" type="button" class="btn link wide intro-keys">Пропустить</button>
+    <button id="intro-start" type="button" class="btn primary wide intro-preset">Начать</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-welcome" hidden>
+  <div class="scrim"></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Знакомство">
+    <div class="grab"></div>
+    <div class="seg langseg" style="margin-bottom:10px"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div>
+    <div class="field" style="margin:0 0 6px"><span>Кто вы друг другу</span><div class="seg kindseg"><button type="button" data-kind="pair">Пара</button><button type="button" data-kind="friends">Друзья</button><button type="button" data-kind="family">Семья</button></div></div>
+    <h2 class="sheet-title serif-big" id="w-title">Давайте настроим вашу пару</h2>
+    <p class="note lead" id="w-lead">Один раз вводите имя и общий код. На втором телефоне введите тот же код, и список станет общим.</p>
+    <label class="field"><span>Как вас зовут</span>
+      <input id="w-nick" type="text" placeholder="Например, Саша" autocomplete="off" maxlength="24">
+    </label>
+    <label class="field"><span class="lbl-code">Код вашей пары</span>
+      <div class="inline">
+        <input id="w-code" type="text" placeholder="Придумайте или вставьте полученный код" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button type="button" class="btn small" id="w-gen">Придумать</button>
+      </div>
+    </label>
+    <button id="w-save" type="button" class="btn primary wide">Начать</button>
+    <button id="w-solo" type="button" class="btn link wide">Пока без синхронизации, только имя</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="config.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
