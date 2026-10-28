@@ -9,8 +9,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Сериалы">
-<title>Наши сериалы</title>
+<meta name="apple-mobile-web-app-title" content="KoHan Hub">
+<title>KoHan Hub</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -21,31 +21,40 @@
 <div id="app">
   <header class="top">
     <div class="brand">
-      <h1>Наши сериалы</h1>
+      <h1>KoHan Hub</h1>
       <p id="subtitle" class="subtitle"></p>
     </div>
     <button id="pair" class="pair" type="button" aria-label="Мы"></button>
     <button id="btn-sync" class="sync" type="button" aria-label="Состояние синхронизации"><span class="dot" id="sync-dot"></span></button>
+    <button id="btn-help" class="iconbtn" type="button" aria-label="Помощь"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.2-2.5 3.9"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg></button>
     <button id="btn-settings" class="iconbtn" type="button" aria-label="Настройки">
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
     </button>
   </header>
 
   <main>
+    <section id="plays" class="plays" hidden></section>
+
     <section id="rail-wrap" class="rail-wrap" hidden>
       <h2 class="section-title">Продолжаем</h2>
       <div id="rail" class="rail"></div>
     </section>
 
+    <div id="minemode" class="seg" hidden></div>
+
     <nav id="filters" class="chips" aria-label="Фильтр по статусу"></nav>
+
+    <div id="listbar" class="listbar" hidden><input id="list-q" type="search" autocomplete="off" aria-label="Поиск в списке"><select id="list-sort" aria-label="Сортировка"></select></div>
 
     <section id="grid" class="grid" aria-live="polite"></section>
     <section id="stats" class="stats" hidden></section>
     <section id="codes" class="codes" hidden></section>
+    <section id="roomv" class="roomv" hidden><div id="room-body"></div></section>
   </main>
 
   <nav id="tabs" class="tabs" aria-label="Разделы">
     <button type="button" data-tab="together" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.3A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.6c0 5.7-7.5 10.3-7.5 10.3z"/></svg><span>Вместе</span></button>
+    <button type="button" data-tab="room" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg><i id="room-dot" class="tabdot" hidden></i><span>Чат</span></button>
     <button type="button" data-tab="mine" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.6"/><path d="M5 20c.8-3.6 3.8-5.4 7-5.4s6.2 1.8 7 5.4"/></svg><span>Моё</span></button>
     <button type="button" data-tab="stats" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-6"/></svg><span>Итоги</span></button>
     <button type="button" data-tab="codes" class="tab"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="3.6"/><path d="M11.6 12H21M18 12v3M15 12v2"/></svg><span>Коды</span></button>
@@ -75,6 +84,7 @@
   <div class="scrim" data-close></div>
   <div class="panel panel-tall" role="dialog" aria-modal="true" aria-label="Сериал">
     <div id="detail-body"></div>
+    <div id="chat-box" class="chatbox" hidden></div>
   </div>
 </div>
 
@@ -86,6 +96,8 @@
     <h2 class="sheet-title">Настройки</h2>
     <div class="field"><span>Кто вы друг другу</span><div class="seg kindseg"><button type="button" data-kind="pair">Пара</button><button type="button" data-kind="friends">Друзья</button><button type="button" data-kind="family">Семья</button></div></div>
     <div class="field"><span>Язык</span><div class="seg langseg"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div></div>
+
+    <div class="field"><span>Напоминания о новых сериях</span><div class="seg notifyseg"><button type="button" data-notify="0">Выкл</button><button type="button" data-notify="1">Вкл</button></div><p class="note">Сообщим, когда станет известна дата новой серии, и в день её выхода. Только с 9:00 до 21:00. Работает в приложении для Android (APK).</p></div>
 
     <label class="field"><span>Ваше имя</span>
       <input id="cfg-nick" type="text" placeholder="Например, Саша" autocomplete="off" maxlength="24">
@@ -121,6 +133,9 @@
       <label class="field"><span>Ключ TMDB</span>
         <input id="cfg-tmdb" type="password" autocomplete="off" spellcheck="false">
       </label>
+      <label class="field"><span>Ключ RAWG (для игр)</span>
+        <input id="cfg-rawg" type="password" autocomplete="off" spellcheck="false">
+      </label>
       <label class="field"><span>Конфиг Firebase (JSON)</span>
         <textarea id="cfg-fb" rows="6" spellcheck="false" placeholder='{ "apiKey": "…", "databaseURL": "…" }'></textarea>
       </label>
@@ -129,7 +144,21 @@
       </label>
     </details>
 
+    <div class="field" style="margin-top:18px"><button type="button" class="btn wide" id="btn-check-upd">Проверить обновление</button><p class="note" id="app-ver"></p></div>
+    <div class="brandfoot"><img src="icons/kohangl-logo.png" alt="KoHan Hub"><div><span>KoHan Hub · by <a href="https://www.youtube.com/@KoHanGL" target="_blank" rel="noopener">KoHanGL</a></span><span><a href="https://www.twitch.tv/kohangl" target="_blank" rel="noopener">Twitch</a> · <a href="https://www.youtube.com/@KoHanGL" target="_blank" rel="noopener">YouTube</a></span></div></div>
     <button id="btn-save-cfg" type="button" class="btn primary wide">Сохранить</button>
+  </div>
+</div>
+
+
+<div class="sheet" id="sheet-help" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Помощь">
+    <div class="grab"></div>
+    <h2 class="sheet-title serif-big">Как это работает</h2>
+    <details class="hl" open><summary>Что нового</summary><p>Новое: вкладка «Чат» внизу, общий чат комнаты. Его можно связать с каналом Discord. Значок 💬 на постере показывает, что под тайтлом есть обсуждение. Push-уведомления убраны. Приглашения «Позвать играть/смотреть» теперь видны в самом верху вкладки «Вместе». Напоминания о выходе серий остались в приложении для Android. На iPhone игр нет.</p></details>
+    <details class="hl"><summary>Что это</summary><p>KoHan Hub — общий список сериалов, фильмов, аниме и игр для двоих или для компании. Что смотрите и во что играете, видно всем, а отметки и оценки у каждого свои.</p></details><details class="hl"><summary>Кабинеты и коды</summary><p>Кабинет — общая комната со своим кодом. Придумайте код и отправьте его друзьям: кто введёт тот же код, попадёт в ваш список. Кабинет бывает «Пара», «Друзья» или «Семья», а по содержимому — «Фильмы и сериалы» или «Игры». Кабинетов может быть несколько, переключайтесь во вкладке «Коды».</p></details><details class="hl"><summary>Вкладки</summary><p>«Вместе» — общий список кабинета. «Моё» — только ваш личный список, сверху там переключатель «Фильмы и сериалы / Игры». «Итоги» — статистика. «Коды» — ваши кабинеты и участники.</p></details><details class="hl"><summary>Как добавить</summary><p>Нажмите «Добавить» и введите название или вставьте ссылку (TMDB, IMDb, MyAnimeList, Steam). Выберите «В планы» или «Смотрим сейчас». В играх вместо этого «Хочу поиграть» и «Играем».</p></details><details class="hl"><summary>Прогресс и статусы</summary><p>В карточке сериала отмечайте серии кнопкой «+1». Видно, кто на какой серии, а чужие серии впереди ваших спрятаны как спойлер. Статусы: «Смотрим», «В планах», «Отложили», «Досмотрели». У игр прогресса нет, только статус.</p></details><details class="hl"><summary>Оценки и заметки</summary><p>Ставьте оценку от 1 до 10 и пишите мини-отзыв. К сериям можно добавлять реакции и заметки. Оценки остальных участников видны в карточке.</p></details><details class="hl"><summary>Чат комнаты и Discord</summary><p>Кнопка 💬 вверху открывает общий чат комнаты. Чтобы связать его с Discord, добавьте бота на свой сервер и в нужном канале напишите /link КОД (код виден в чате и во вкладке «Коды»). После этого сообщения идут в обе стороны. Отключить можно кнопкой в чате или командой /unlink.</p></details><details class="hl"><summary>Обсуждение</summary><p>Внизу карточки, во вкладке «Вместе», есть общее обсуждение этого сериала или игры. Отметьте «Спойлер», и сообщение будет скрыто у остальных, пока они не нажмут. Для сериалов сообщение привязывается к вашей серии: тем, кто ещё не дошёл, оно закрыто. Значок 💬 на постере показывает, что там есть сообщения, а яркий означает непрочитанные.</p></details><details class="hl"><summary>Чат комнаты</summary><p>Вкладка «Чат» внизу: общая переписка всего кабинета, не привязанная к тайтлу. Точка на вкладке означает новые сообщения. К чату можно подключить Discord-канал, тогда сообщения идут в обе стороны.</p></details><details class="hl"><summary>Что смотрим дальше?</summary><p>Кнопка «Что смотрим?» выбирает случайное из «В планах»: у каждого варианта одинаковый шанс. Можно ограничить сериалами или фильмами. В играх кнопка называется «Во что играем?». Если хочется спокойно решить, под рулеткой есть голосование.</p></details><details class="hl"><summary>Календарь и уведомления</summary><p>«Календарь» показывает даты выхода серий и игр. В настройках включите уведомления: напоминание придёт в день выхода.</p></details><details class="hl"><summary>Игры</summary><p>Игры ищутся через Steam и RAWG, можно писать по-русски или по-украински. Платформа только ПК. Отмечайте статус, ставьте оценку и пишите отзыв. На iPhone раздел игр недоступен.</p></details><details class="hl"><summary>Установка и обновления</summary><p>iPhone: в Safari нажмите «Поделиться» → «На экран “Домой”». Android: установите APK. О новой версии сообщит плашка «Доступна новая версия», а проверить вручную можно в настройках.</p></details><details class="hl"><summary>Как перенести настройки</summary><p>Чтобы не вводить ключи на каждом телефоне: «Настройки» → «Ключи и регион» → «Скопировать код настроек». Вставьте его на другом телефоне при первом запуске.</p></details>
+    <button type="button" class="btn primary wide" data-close>Понятно</button>
   </div>
 </div>
 
@@ -139,8 +168,9 @@
   <div class="panel" role="dialog" aria-modal="true" aria-label="Добро пожаловать">
     <div class="grab"></div>
     <div class="seg langseg" style="margin-bottom:10px"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div>
+    <img class="intrologo" src="icons/kohangl-logo.png" alt="KoHan Hub">
     <h2 class="sheet-title serif-big">Добро пожаловать</h2>
-    <p class="note lead">Общий список сериалов и фильмов для двоих или для компании. Всё хранится в вашем облаке и одинаково видно на всех телефонах.</p>
+    <p class="note lead">Общий список сериалов, фильмов и игр для двоих или для компании. Всё хранится в вашем облаке и одинаково видно на всех телефонах.</p>
     <ol class="intro-steps">
       <li><b>Установите как приложение.</b> iPhone: в Safari нажмите «Поделиться» → «На экран “Домой”». Android: меню ⋮ → «Установить приложение».</li>
       <li class="intro-keys"><b>Подключите сервисы.</b> Нужен бесплатный ключ TMDB (поиск сериалов) и база Firebase (синхронизация). Если приложение уже настроено на другом вашем телефоне, откройте там Настройки → «Скопировать код настроек» и вставьте его ниже.</li>
@@ -156,12 +186,51 @@
   </div>
 </div>
 
+<div class="sheet" id="sheet-codeact" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Кабинет">
+    <div class="grab"></div>
+    <div id="codeact-body"></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-play" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-label="Приглашение">
+    <div class="grab"></div>
+    <h2 class="sheet-title" id="inv-title"></h2>
+    <p class="note">Остальные участники увидят приглашение вверху вкладки «Вместе» и смогут ответить.</p>
+    <div id="inv-chips" class="chips" style="margin:8px 0"></div>
+    <label class="field"><span>Когда</span><input id="inv-time" type="datetime-local"></label>
+    <button type="button" class="btn primary wide" id="inv-send">Отправить приглашение</button>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-pick" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-tall" role="dialog" aria-modal="true" aria-label="Что смотрим дальше">
+    <div class="grab"></div>
+    <div id="pick-body"></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-cal" hidden>
+  <div class="scrim" data-close></div>
+  <div class="panel panel-tall" role="dialog" aria-modal="true" aria-label="Календарь выхода серий">
+    <div class="grab"></div>
+    <div id="cal-body"></div>
+  </div>
+</div>
+
+<div id="upd" class="upd" hidden><span id="upd-t">Доступна новая версия</span><button type="button" id="upd-go">Обновить</button><button type="button" id="upd-x" class="x" aria-label="Закрыть">&times;</button></div>
+
 <div class="sheet" id="sheet-welcome" hidden>
   <div class="scrim"></div>
   <div class="panel" role="dialog" aria-modal="true" aria-label="Знакомство">
     <div class="grab"></div>
     <div class="seg langseg" style="margin-bottom:10px"><button type="button" data-lang="ru">Русский</button><button type="button" data-lang="uk">Українська</button><button type="button" data-lang="en">English</button></div>
     <div class="field" style="margin:0 0 6px"><span>Кто вы друг другу</span><div class="seg kindseg"><button type="button" data-kind="pair">Пара</button><button type="button" data-kind="friends">Друзья</button><button type="button" data-kind="family">Семья</button></div></div>
+    <div class="field" style="margin:0 0 6px"><span>Что будете отслеживать</span><div class="seg cntseg"><button type="button" data-content="video" style="--c:var(--amber)">Фильмы и сериалы</button><button type="button" data-content="games" style="--c:var(--amber)">Игры</button></div></div>
     <h2 class="sheet-title serif-big" id="w-title">Давайте настроим вашу пару</h2>
     <p class="note lead" id="w-lead">Один раз вводите имя и общий код. На втором телефоне введите тот же код, и список станет общим.</p>
     <label class="field"><span>Как вас зовут</span>
@@ -180,6 +249,7 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
+<script src="version.js"></script>
 <script src="config.js"></script>
 <script src="i18n.js"></script>
 <script src="app.js"></script>

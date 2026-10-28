@@ -340,7 +340,7 @@ main { padding-bottom: calc(120px + var(--safe-b)); }
 .tabs { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; display: flex; justify-content: space-around;
   padding: 8px 12px calc(8px + var(--safe-b)); background: color-mix(in srgb, var(--velvet) 94%, transparent); backdrop-filter: blur(14px);
   border-top: 1px solid var(--line); border-radius: 22px 22px 0 0; }
-.tab { flex: 1; max-width: 140px; background: none; border: 0; color: var(--dust); display: grid; justify-items: center; gap: 2px; padding: 6px 0; font-size: 12px; border-radius: 14px; transition: color .15s, transform .15s; }
+.tab { position: relative; flex: 1; max-width: 140px; background: none; border: 0; color: var(--dust); display: grid; justify-items: center; gap: 2px; padding: 6px 0; font-size: 12px; border-radius: 14px; transition: color .15s, transform .15s; }
 .tab.active { color: var(--amber); }
 .tab.active svg { fill: color-mix(in srgb, var(--amber) 25%, transparent); transform: translateY(-1px) scale(1.08); }
 .tab:active { transform: scale(0.94); }
@@ -411,11 +411,11 @@ body { background-image:
 .avinit { font: 600 calc(var(--s) * .46)/1 var(--serif); color: var(--c); }
 
 /* шапка: название и подпись в одну строку */
-.top h1 { font-size: 24px; white-space: nowrap; }
+.top h1 { font-size: 22px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .subtitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pair .av { --s: 30px !important; }
+.pair .av { --s: 28px !important; }
 .pair { padding: 4px 2px; }
-.iconbtn, .sync { width: 40px; }
+.iconbtn, .sync { width: 35px; }
 
 .wiki { margin: 12px 0 4px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; color: var(--dust); font-size: 13px; }
 .wk { padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.09); color: var(--paper); text-decoration: none; font-weight: 600; font-size: 12px; letter-spacing: .04em; }
@@ -495,3 +495,155 @@ html[data-theme="cream"] #intro-code { background: rgba(43, 36, 51, .06); }
 #sheet-intro .intro-preset { display: none; }
 #sheet-intro.preset .intro-keys { display: none; }
 #sheet-intro.preset .intro-preset { display: block; }
+
+/* ───────── Оценки, прогресс, голосование, календарь ───────── */
+.chip.alt { border-style: dashed; }
+.rateblock { padding: 6px 0 10px; border-bottom: 1px solid var(--line); }
+.rval { font-size: 13px; color: var(--dust); }
+.rval b { font: 600 22px var(--serif); color: var(--pc, var(--amber)); }
+.chips10 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin: 4px 0 8px; }
+.chips10 button { padding: 8px 0; border-radius: 9px; border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--paper); font-size: 13px; }
+.chips10 button.on { background: var(--amber); color: var(--amber-ink); border-color: var(--amber); font-weight: 700; }
+.rnote { width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--paper); font: inherit; font-size: 14px; }
+.rtext { margin: 2px 0 0; color: rgba(244,239,230,.8); font-size: 14px; font-style: italic; }
+.ravg { margin: 12px 0 0; color: var(--dust); }
+.ravg b { color: var(--paper); font-size: 17px; }
+.wlist { display: grid; gap: 6px; }
+.wrow { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.05); }
+.wrow .who2 { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+.wrow .wat { font-weight: 600; }
+.wrow em { grid-column: 1 / -1; font-style: normal; font-size: 12.5px; color: var(--dust); }
+.wrow em.ahead { color: var(--rose); }
+.spoil { margin: 0 0 8px; padding: 8px 12px; border-radius: 12px; background: color-mix(in srgb, var(--rose) 18%, transparent); font-size: 13.5px; }
+.emos { display: flex; gap: 6px; margin-bottom: 8px; }
+.emos button { flex: 1; padding: 8px 0; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,.06); font-size: 20px; }
+.emos button.on { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 22%, transparent); }
+.eplist { margin-top: 10px; display: grid; gap: 6px; font-size: 13.5px; }
+.eprow i { color: rgba(244,239,230,.8); }
+.pickwin { display: flex; gap: 14px; align-items: center; padding: 12px; border-radius: 18px; background: var(--curtain); border: 1px solid var(--amber); margin-bottom: 14px; }
+.pickwin .pw-img, .pickrow .pr-img, .calrow .cr-img { width: 56px; flex: none; border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; background: rgba(255,255,255,.06); }
+.pw-img img, .pr-img img, .cr-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pickwin > div:last-child { display: grid; gap: 4px; justify-items: start; }
+.pickwin b { font: 600 18px var(--serif); }
+.pw-l, .pw-s { font-size: 12.5px; color: var(--dust); }
+.picklist { display: grid; gap: 10px; }
+.pickrow { display: flex; gap: 12px; padding: 10px; border-radius: 16px; background: rgba(255,255,255,.04); border: 1px solid var(--line); }
+.pickrow.veto { opacity: .5; }
+.pr-main { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.pr-main > span { font-size: 12.5px; color: var(--dust); }
+.votes { display: flex; gap: 6px; margin-top: 4px; }
+.votes button { flex: 1; padding: 7px 0; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,.06); font-size: 16px; color: var(--paper); }
+.votes button.on { border-color: var(--amber); background: color-mix(in srgb, var(--amber) 25%, transparent); }
+.calday { margin: 18px 0 6px; font: 600 15px var(--serif); }
+.calday em { font: 400 12.5px Inter, sans-serif; color: var(--dust); margin-left: 8px; text-transform: none; }
+.calrow { display: flex; gap: 12px; align-items: center; width: 100%; text-align: left; padding: 8px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid var(--line); color: inherit; font: inherit; margin-bottom: 6px; }
+.cr-t { display: grid; gap: 2px; }
+.cr-t span { font-size: 12.5px; color: var(--dust); }
+.upd { position: fixed; left: 12px; right: 12px; top: calc(10px + var(--safe-t, 0px)); z-index: 60; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px 10px 16px; border-radius: 16px; background: var(--amber); color: var(--amber-ink); box-shadow: 0 8px 24px rgba(0,0,0,.35); font-weight: 600; }
+.upd[hidden] { display: none; }
+.upd button { border: 0; border-radius: 10px; padding: 8px 14px; background: var(--amber-ink); color: var(--amber); font-weight: 700; }
+html[data-theme="cream"] .chips10 button, html[data-theme="cream"] .emos button, html[data-theme="cream"] .votes button { background: rgba(43,36,51,.06); color: var(--paper); }
+html[data-theme="cream"] .chips10 button.on { background: var(--amber); color: #fff; }
+html[data-theme="cream"] .rnote { background: rgba(43,36,51,.06); }
+html[data-theme="cream"] .rtext, html[data-theme="cream"] .eprow i { color: rgba(43,36,51,.8); }
+html[data-theme="cream"] .wrow, html[data-theme="cream"] .pickrow, html[data-theme="cream"] .calrow { background: rgba(43,36,51,.04); }
+.upd .x { background: transparent; color: var(--amber-ink); font-size: 22px; padding: 4px 8px; }
+
+/* ───────── Тема KoHan (цвета канала KoHanGL) ───────── */
+html[data-theme="kohan"] { --ink: #0b0418; --velvet: #150829; --curtain: #241046; --paper: #f6edff; --dust: #a893cf; --line: rgba(190, 150, 255, 0.14); --amber: #b84dff; --amber-ink: #0f0420; --rose: #ff2bd6; --sea: #00e5ff; --s-watching: #b84dff; --s-want: #00e5ff; --s-paused: #8f84a8; --s-done: #58f5b0; }
+html[data-theme="kohan"] .tabs { box-shadow: 0 -1px 0 rgba(184, 77, 255, .35), 0 -10px 30px rgba(184, 77, 255, .12); }
+html[data-theme="kohan"] .top h1 { background: linear-gradient(90deg, #ff2bd6, #b84dff 55%, #00e5ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-theme="kohan"] .btn.primary, html[data-theme="kohan"] .plus1, html[data-theme="kohan"] #fab { background: linear-gradient(90deg, #d23bff, #8a4dff); color: #fff; }
+.brandfoot { display: flex; align-items: center; gap: 12px; margin: 26px 0 8px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--dust); font-size: 13px; }
+.brandfoot img { width: 52px; height: 52px; object-fit: contain; flex: none; }
+.brandfoot a { color: var(--paper); text-decoration: none; font-weight: 600; }
+.brandfoot span { display: block; }
+.intrologo { display: block; width: 96px; margin: 2px auto 8px; }
+
+/* ───────── Игры ───────── */
+#minemode { margin: 4px 0 10px; grid-template-columns: 1fr 1fr; }
+.cntseg, #code-content { grid-template-columns: 1fr 1fr; }
+.glinks { margin: 12px 0 4px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* ───────── Помощь ───────── */
+.hl { border-bottom: 1px solid var(--line); padding: 2px 0; }
+.hl summary { cursor: pointer; padding: 12px 2px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+.hl summary::-webkit-details-marker { display: none; }
+.hl summary::after { content: "+"; color: var(--dust); font-size: 20px; }
+.hl[open] summary::after { content: "–"; }
+.hl p { margin: 0 2px 14px; color: var(--dust); line-height: 1.5; font-size: 14px; }
+#sheet-help .btn { margin-top: 14px; }
+
+/* ───────── Поиск, сортировка, свайп ───────── */
+.listbar { display: flex; gap: 8px; margin: 2px 0 12px; padding: 0 var(--gutter); }
+.listbar input { flex: 1; min-width: 0; background: rgba(0,0,0,.28); border: 1px solid var(--line); color: var(--paper); border-radius: 12px; padding: 10px 12px; font-size: 14px; }
+.listbar select { background: rgba(0,0,0,.28); border: 1px solid var(--line); color: var(--paper); border-radius: 12px; padding: 10px 8px; font-size: 13px; max-width: 46%; }
+.pcard { position: relative; touch-action: pan-y; }
+.pcard.sw-r .pimg { box-shadow: inset 0 0 0 3px var(--s-done); }
+.pcard.sw-l .pimg { box-shadow: inset 0 0 0 3px var(--s-paused); }
+.pcard.sw-go .pimg { filter: brightness(1.2); }
+
+/* ───────── Приглашения ───────── */
+.plays { display: grid; gap: 10px; margin: 0 0 14px; padding: 0 var(--gutter); }
+.playcard { background: linear-gradient(135deg, rgba(160,60,255,.22), rgba(0,0,0,.25)); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; }
+.pl-h { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+.pl-x { border: 0; background: none; color: var(--dust); font-size: 22px; line-height: 1; padding: 0 4px; }
+.pl-w { color: var(--amber); font-weight: 600; margin: 4px 0 8px; }
+.plbtns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.plbtns button { border: 1px solid var(--line); background: rgba(0,0,0,.25); color: var(--paper); border-radius: 10px; padding: 9px 4px; font-size: 13px; }
+.plbtns button.active { background: var(--amber); color: var(--amber-ink); border-color: transparent; font-weight: 600; }
+.pl-r { color: var(--dust); font-size: 13px; margin-top: 8px; }
+#inv-time { width: 100%; }
+
+/* ───────── Рулетка «что дальше» ───────── */
+.spinwin { display: flex; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: var(--curtain); border: 1px solid var(--amber); margin: 10px 0 12px; min-height: 120px; }
+.spinwin.empty { justify-content: center; font-size: 44px; opacity: .6; }
+.spinwin .pw-img { width: 74px; flex: none; border-radius: 10px; overflow: hidden; aspect-ratio: 2/3; background: rgba(255,255,255,.06); }
+.spinwin > div:last-child { display: grid; gap: 4px; justify-items: start; min-width: 0; }
+.spinwin b { font: 600 19px var(--serif); }
+#spin-win.rolling .spinwin { border-color: var(--line); filter: saturate(.8); }
+.spinacts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+.spinchips { padding: 0; margin: 6px 0; }
+.votes-d { margin-top: 18px; }
+
+.btn.danger { background: rgba(255, 70, 90, .16); border: 1px solid #ff465a; color: #ff8a97; }
+#codeact-body .btn { margin-top: 10px; }
+
+/* ───────── Обсуждение под тайтлом ───────── */
+.chatbox { padding: 6px 0 18px; }
+.chatlist { display: grid; gap: 8px; max-height: 340px; overflow-y: auto; margin-bottom: 10px; }
+.cmsg { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 14px; padding: 8px 12px; }
+.cmsg.own { background: color-mix(in srgb, var(--amber) 14%, transparent); }
+.cm-h { display: flex; gap: 8px; align-items: baseline; font-size: 13px; }
+.cm-time { color: var(--dust); font-size: 12px; margin-left: auto; }
+.cm-ep { color: var(--amber); font-size: 12px; }
+.cm-t { white-space: pre-wrap; word-break: break-word; margin-top: 2px; }
+.cm-hide { margin-top: 4px; border: 1px dashed var(--line); background: none; color: var(--dust); border-radius: 10px; padding: 6px 10px; font-size: 13px; text-align: left; }
+.cm-x { border: 0; background: none; color: var(--dust); font-size: 18px; line-height: 1; padding: 0 2px; }
+.chatform textarea { width: 100%; box-sizing: border-box; background: rgba(0,0,0,.28); border: 1px solid var(--line); color: var(--paper); border-radius: 12px; padding: 10px 12px; font: inherit; resize: vertical; }
+.chatopts { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; }
+.chatopts .btn { margin-left: auto; }
+.chatchk { font-size: 13px; color: var(--dust); display: flex; gap: 6px; align-items: center; }
+.chatbadge { position: absolute; left: 8px; top: 8px; z-index: 2; background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 3px 9px; font-size: 13px; line-height: 1.2; color: var(--paper); box-shadow: 0 2px 6px rgba(0,0,0,.4); }
+.chatbadge.unread { background: var(--amber); border-color: transparent; color: var(--amber-ink); font-weight: 700; animation: cbpulse 1.8s ease-in-out infinite; }
+@keyframes cbpulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+/* чат комнаты и Discord */
+.iconbtn { position: relative; }
+.rdot { position: absolute; top: 6px; right: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 2px var(--bg, #0b0614); }
+.roomlist { max-height: 46vh; min-height: 120px; }
+.rdisc { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; font-size: 14px; }
+.rdisc.on { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rdisc summary { cursor: pointer; font-weight: 600; }
+.rdisc ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.rcmd { background: rgba(0,0,0,.35); border-radius: 8px; padding: 2px 8px; cursor: pointer; word-break: break-all; }
+
+.tabdot { position: absolute; top: 4px; left: calc(50% + 6px); width: 10px; height: 10px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 2px var(--bg, #0b0614); }
+.roomv { padding: 4px var(--gutter) 0; }
+.roomv .roomlist { max-height: calc(100vh - 380px); max-height: calc(100dvh - 380px); min-height: 120px; align-content: start; overflow-y: auto; }
+
+/* iPhone: при фокусе на поле меньше 16px Safari приближает страницу; отключаем это */
+@supports (-webkit-touch-callout: none) {
+  input, textarea, select { font-size: 16px !important; }
+  .tabs { padding-bottom: max(var(--safe-b), 6px); }
+}

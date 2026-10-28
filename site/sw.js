@@ -1,13 +1,13 @@
 // Service worker: приложение открывается без интернета, постеры и библиотека Firebase кэшируются.
-const VERSION = "v5";
+const VERSION = "v29";
 const SHELL = "sw-shell-" + VERSION;
 const IMGS = "sw-img-v1";
 const LIBS = "sw-libs-v1";
 const KEEP = [SHELL, IMGS, LIBS];
 const ASSETS = [
-  "./", "./index.html", "./app.css", "./app.js", "./i18n.js", "./config.js", "./manifest.webmanifest",
+  "./", "./index.html", "./app.css", "./app.js", "./i18n.js", "./config.js", "./version.js", "./manifest.webmanifest",
   "./fonts/Lora.woff", "./fonts/Inter-Regular.woff", "./fonts/Inter-SemiBold.woff",
-  "./icons/icon-192.png", "./icons/icon-512.png"
+  "./icons/icon-192.png", "./icons/icon-512.png", "./icons/kohangl-logo.png"
 ];
 const MAX_IMGS = 400;
 

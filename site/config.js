@@ -7,6 +7,12 @@ window.APP_CONFIG = {
   // Ключ TMDB (https://www.themoviedb.org/settings/api)
   tmdbApiKey: "4e72b82e980364926256128cdc2db2f3",
 
+  // Ключ RAWG для игр (https://rawg.io/apidocs) — можно оставить пустым и ввести в приложении.
+  rawgKey: "802da62dbb06494092fa816e7ff23254",
+
+  // Ссылка-приглашение вашего Discord-бота (для чата комнаты). Можно оставить пустой.
+  discordInvite: "",
+
   // Конфигурация Firebase.
   firebase: {
     apiKey: "AIzaSyCmaJkQJrprlK9OqySgUs2-IkFAzaEAJF4",

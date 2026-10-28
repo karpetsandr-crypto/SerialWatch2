@@ -1,15 +1,15 @@
 {
   "id": "./",
-  "name": "Наши сериалы",
-  "short_name": "Сериалы",
+  "name": "KoHan Hub",
+  "short_name": "KoHan",
   "description": "Общий список сериалов для двоих: постеры, описания, где остановились.",
   "lang": "uk",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#16131f",
-  "theme_color": "#16131f",
+  "background_color": "#0b0418",
+  "theme_color": "#0b0418",
   "icons": [
     {
       "src": "icons/icon-192.png",
